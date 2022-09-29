@@ -7,6 +7,7 @@ import Header from "./components/Header"
 import TablePage from "./pages/TablePage"
 import ContactForm from "./pages/ContactForm"
 import UserProfile from "./pages/UserProfile"
+import Users from "./pages/Users"
 import "./style/App.css"
 
 export default function App() {
@@ -37,6 +38,10 @@ export default function App() {
                 <Route
                     path="/user-profile"
                     element={<UserProfile />}
+                />
+                <Route
+                    path="/users"
+                    element={<Users />}
                 />
             </Routes>
         </BrowserRouter>

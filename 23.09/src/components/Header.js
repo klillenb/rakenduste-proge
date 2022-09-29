@@ -8,6 +8,7 @@ export default function Header() {
         "homework",
         "MUI table",
         "contact form",
+        "users",
         "user profile"
     ]
     const navigate = useNavigate()
@@ -21,6 +22,8 @@ export default function Header() {
                 return navigate("/table-page")
             case "contact form":
                 return navigate("/contact-form")
+            case "users":
+                return navigate("/users")
             case "user profile":
                 return navigate("/user-profile")
             default:
