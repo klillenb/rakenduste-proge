@@ -3,6 +3,7 @@ const router = express.Router()
 const helloController = require("../controllers/hello.controller")
 
 // middleware that is specific to this router
+// takes the request, applies biz logic
 router.use((req, res, next) => {
     const { name } = req.body
 
@@ -16,13 +17,15 @@ router.use((req, res, next) => {
     next()
 })
 
+// additional middleware layer
 const getMiddleware = (req, res) => {
-    
+    console.log("Additional middleware")
+    next()
 }
 
-router.get("/", helloController.read)
-router.post("/", helloController.create)
-router.put("/", helloController.update)
-router.delete("/", helloController.delete)
+router.get("/", getMiddleware, helloController.read)
+router.post("/:name", helloController.create)
+router.put("/:name", helloController.update)
+router.delete("/:name", helloController.delete)
 
 module.exports = router

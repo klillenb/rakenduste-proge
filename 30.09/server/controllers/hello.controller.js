@@ -1,14 +1,32 @@
 // CRUD
 
+// example based on cats
+let cats = ["Fluffy"]
+
 exports.create = (req, res) => {
-    res.send("create")
+    const { name } = req.params
+
+    cats.push(name)
+
+    res.send(cats)
 }
 exports.read = (req, res) => {
     res.send("get")
 }
 exports.update = (req, res) => {
-    res.send("update")
+    const { name } = req.params
+
+    cats = cats.map(cat => {
+        if (cat === name) {
+            return `${cat}_updated`
+        }
+        return cat
+    })
+    res.send(cats)
 }
 exports.delete = (req, res) => {
-    res.send("delete")
+    const { name } = req.params
+
+    cats = cats.filter(cat => cat !== name)
+    res.send(cats)
 }
