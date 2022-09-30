@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const goodbyeController = require("../controllers/goodbye.controller")
+const goodbyeController = require("../controllers/dog.controller")
 
 // middleware that is specific to this router
 // takes the request, applies biz logic
