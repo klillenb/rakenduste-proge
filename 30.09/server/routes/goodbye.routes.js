@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const helloController = require("../controllers/hello.controller")
+const goodbyeController = require("../controllers/goodbye.controller")
 
 // middleware that is specific to this router
 // takes the request, applies biz logic
@@ -23,9 +23,9 @@ const getMiddleware = (req, res, next) => {
     next()
 }
 
-router.get("/", getMiddleware, helloController.read)
-router.post("/:name", helloController.create)
-router.put("/:name", helloController.update)
-router.delete("/:name", helloController.delete)
+router.get("/", getMiddleware, goodbyeController.read)
+router.post("/:name", goodbyeController.create)
+router.put("/:name", goodbyeController.update)
+router.delete("/:name", goodbyeController.delete)
 
 module.exports = router

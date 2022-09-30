@@ -1,4 +1,4 @@
-// CRUD
+// CRUD with temp local DB
 
 // example based on cats
 let cats = ["Fluffy"]
