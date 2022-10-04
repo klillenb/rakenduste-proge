@@ -16,12 +16,14 @@ exports.read = (req, res) => {
 exports.update = (req, res) => {
     const { name } = req.params
 
-    cats = cats.map(cat => {
-        if (cat === name) {
-            return `${cat}_updated`
-        }
-        return cat
-    })
+    // find first record with same name and update it
+    const firstRecord = (element) => element === name
+
+    const index = cats.findIndex(firstRecord)
+
+    if(index !== -1){
+        cats[index] = `${cats[index]}_updated`
+    }
     res.send(cats)
 }
 exports.delete = (req, res) => {
