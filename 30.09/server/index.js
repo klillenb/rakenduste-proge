@@ -3,6 +3,7 @@ const morgan = require("morgan")
 const mongoose = require("mongoose")
 const helloRouter = require("./routes/hello.routes")
 const goodbyeRouter = require("./routes/goodbye.routes")
+const todoRouter = require("./routes/todo.routes")
 require("dotenv").config()
 
 const app = express()
@@ -19,6 +20,7 @@ mongoose
 
 app.use("/hello", helloRouter)
 app.use("/goodbye", goodbyeRouter)
+app.use("/todo", todoRouter)
 
 app.get("/", (req, res) => {
     res.send("Hello World!")
