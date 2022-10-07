@@ -28,17 +28,11 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
     const { username, email, password } = req.body
     const existingUser = await User.findOne({ email, username })
-    if(existingUser){
-        if(await bcrypt.compare(password, existingUser.password)){
-            const token = jwt.sign({
-                username: existingUser.username,
-                email: existingUser.email
-            }, "testing", {expiresIn: "1h"})
-            res.send(`LOGGED IN ${token}`)
-        } else {
-            res.send("WRONG PASSWORD")
-        }
-    } else {
-        res.send("User doesn't exist")
-    }
+    if(!existingUser) return res.send("User doesn't exist")
+    if(!await bcrypt.compare(password, existingUser.password)) return res.send("WRONG PASSWORD")
+    const token = jwt.sign({
+        username: existingUser.username,
+        email: existingUser.email
+    }, "testing", {expiresIn: "1h"})
+    res.send(`LOGGED IN ${token}`)
 }
