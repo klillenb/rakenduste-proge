@@ -8,6 +8,7 @@ import TablePage from "./pages/TablePage"
 import Todo from "./pages/Todo"
 import UserProfile from "./pages/UserProfile"
 import Users from "./pages/Users"
+import Login from "./components/Login"
 import "./style/App.css"
 
 const UserContext = createContext()
@@ -47,6 +48,10 @@ export default function App() {
                     <Route
                         path="/users"
                         element={<Users />}
+                    />
+                    <Route
+                        path="/login"
+                        element={<Login />}
                     />
                 </Routes>
             </UserContext.Provider>

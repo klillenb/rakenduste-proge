@@ -7,7 +7,7 @@ router.post(
     "/signup",
     body("username").not().isEmpty().trim().escape(),
     body("email").isEmail().normalizeEmail(),
-    body("passWord").isLength({ min: 5 }),
+    body("password").isLength({ min: 5 }),
     userController.signup)
 router.post(
     "/login",

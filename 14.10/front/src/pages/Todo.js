@@ -12,20 +12,20 @@ export default function Todo() {
         importance: ""
     }
     const [formValue, setFormValue] = useState(form)
-    const titleRef = useRef(null)
-    const dateRef = useRef(null)
-    const importanceRef = useRef(null)
+    // const titleRef = useRef(null)
+    // const dateRef = useRef(null)
+    // const importanceRef = useRef(null)
+    const previousInputValue = useRef(null)
 
-    // useEffect(() => {
-    //     previousInputValue.current = formValue
-    // }, [formValue])
+    useEffect(() => {
+        previousInputValue.current = formValue
+    }, [formValue])
 
     const handleFormChange = e => {
         const { value, name } = e.target
-        console.log(e.target)
-        if(name === "date"){
-            value = `${e.$y}-${e.$M + 1 < 10 ? "0".concat(e.$M + 1) : e.$M + 1}-${e.$D < 10 ? "0".concat(e.$D) : e.$D}`
-        }
+        // if(name === "date"){
+        //     value = `${e.$y}-${e.$M + 1 < 10 ? "0".concat(e.$M + 1) : e.$M + 1}-${e.$D < 10 ? "0".concat(e.$D) : e.$D}`
+        // }
         const newValue = {
             ...formValue,
             [name]: value
@@ -35,11 +35,7 @@ export default function Todo() {
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log({
-            titleRef: titleRef,
-            dateRef: dateRef,
-            importanceRef: importanceRef
-        })
+        console.log(previousInputValue.current)
         return alert(`Hi, there is no connection to backend lol`)
     }
 
@@ -62,7 +58,7 @@ export default function Todo() {
                     <FormControl>
                         <TextField
                             value={formValue.title}
-                            inputRef={titleRef}
+                            inputRef={previousInputValue.title}
                             onChange={e => handleFormChange(e)}
                             required
                             id="title"
@@ -72,7 +68,7 @@ export default function Todo() {
                             type="text"
                             margin="dense"
                         />
-                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={et}>
+                        {/* <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={et}>
                             <DatePicker
                                 id="date"
                                 name="date"
@@ -84,10 +80,10 @@ export default function Todo() {
                                 onChange={e => handleFormChange(e)}
                                 renderInput={(params) => <TextField {...params} />}
                             />
-						</LocalizationProvider>
+						</LocalizationProvider> */}
                         <TextField
                             value={formValue.importance}
-                            inputRef={importanceRef}
+                            inputRef={previousInputValue.importance}
                             onChange={e => handleFormChange(e)}
                             id="importance"
                             name="importance"
