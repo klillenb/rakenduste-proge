@@ -1,17 +1,17 @@
-import React, { useState, useRef, useEffect, useContext } from "react"
-import { Box, Button, Divider, FormControl, TextField } from "@mui/material"
+import React, { useState, useRef, useEffect } from "react"
+import { Box, Button, Divider, FormControl, TextField, FormHelperText, Typography } from "@mui/material"
 import axios from "axios"
-import { UserContext } from "../App"
 
-export default function Login() {
+export default function Signup() {
     const form = {
         username: "",
         email: "",
-        password: ""
+        password: "",
+        confirmPwd: ""
     }
-
     const [formValue, setFormValue] = useState(form)
-    const { currentUser, setCurrentUser } = useContext(UserContext)
+    const [helperText, setHelperText] = useState("")
+    const [success, setSuccess] = useState(false)
 
     const handleFormChange = e => {
         const { value, name } = e.target
@@ -25,21 +25,30 @@ export default function Login() {
     const handleSubmit = e => {
         e.preventDefault()
         console.log(formValue)
-        axios.post("http://localhost:8080/login", formValue)
-        .then(function(response) {
-            console.log(response)
-            // setCurrentUser(response.data)
-            console.log(currentUser)
-        })
-        .catch(function(error) {
-            if(error.response){
-                console.log(error.response)
-            } else if (error.request){
-                console.log(error.request)
-            } else {
-                console.log(error.message)
-            }
-        })
+        if(formValue.password === formValue.confirmPwd){
+            setHelperText("")
+            axios.post("http://localhost:8080/signup", {
+                username: formValue.username,
+                email: formValue.email,
+                password: formValue.password
+            })
+            .then(function(response) {
+                console.log(response)
+                setSuccess(true)
+            })
+            .catch(function(error) {
+                if(error.response){
+                    console.log(error.response)
+                    setHelperText(error.response.data.errors[0].msg)
+                } else if (error.request){
+                    console.log(error.request)
+                } else {
+                    console.log(error.message)
+                }
+            }) 
+        } else {
+            setHelperText("Passwords don't match!")
+        }
     }
 
     return (
@@ -51,13 +60,14 @@ export default function Login() {
                 alignItems="center"
                 minHeight="100vh"
             >
-                <Divider>Login</Divider>
+                <Divider>Signup</Divider>
                 <Box
                     component="form"
                     noValidate
                     autoComplete="off"
                     onSubmit={handleSubmit}
                 >
+                    {success && <Typography>User created!</Typography>}
                     <FormControl>
                         <TextField
                             value={formValue.username}
@@ -92,13 +102,28 @@ export default function Login() {
                             type="password"
                             margin="dense"
                         />
+                        <FormHelperText>Password must be min. 5 characters</FormHelperText>
+                        <TextField
+                            value={formValue.confirmPwd}
+                            onChange={e => handleFormChange(e)}
+                            required
+                            id="confirmPwd"
+                            name="confirmPwd"
+                            label="Confirm Password"
+                            autoComplete="none"
+                            type="password"
+                            margin="dense"
+                        />
+                        <FormHelperText error>
+                            {helperText}
+                        </FormHelperText>
                         <Button
                             type="submit"
                             size="large"
                             variant="contained"
                             margin="normal"
                         >
-                            Login
+                            Create user
                         </Button>
                     </FormControl>
                 </Box>

@@ -9,12 +9,13 @@ import Todo from "./pages/Todo"
 import UserProfile from "./pages/UserProfile"
 import Users from "./pages/Users"
 import Login from "./components/Login"
+import Signup from "./components/Signup"
 import "./style/App.css"
 
-const UserContext = createContext()
+export const UserContext = createContext()
 
 export default function App() {
-    const [currentUser, setCurrentUser] = useState()
+    const [currentUser, setCurrentUser] = useState("AAAA")
 
     return (
         <BrowserRouter>
@@ -52,6 +53,10 @@ export default function App() {
                     <Route
                         path="/login"
                         element={<Login />}
+                    />
+                    <Route
+                        path="/signup"
+                        element={<Signup />}
                     />
                 </Routes>
             </UserContext.Provider>

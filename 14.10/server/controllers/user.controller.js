@@ -35,7 +35,8 @@ exports.signup = async (req, res) => {
         email,
         password: await bcrypt.hash(password, saltRounds)
     })
-    res.send(user)
+    // res.send(user)
+    res.send("User created!")
 }
 
 exports.login = async (req, res) => {
@@ -51,5 +52,5 @@ exports.login = async (req, res) => {
         username: existingUser.username,
         email: existingUser.email
     }, `${key}`, {expiresIn: "1h"})
-    res.send(`LOGGED IN ${token}`)
+    res.send(`${token}`)
 }
