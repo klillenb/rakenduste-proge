@@ -30,7 +30,7 @@ export default function UserProfile() {
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            minHeight="180vh"
+            minHeight="100vh"
         >
             <List
                 sx={{

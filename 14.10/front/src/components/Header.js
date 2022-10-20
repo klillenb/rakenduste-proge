@@ -32,7 +32,7 @@ export default function Header() {
     }
 
     return (
-        <AppBar position="absolute">
+        <AppBar position="sticky">
             <Toolbar disableGutters>
                 <Box sx={{ display: "flex" }}>
                     {pages.map(page => (

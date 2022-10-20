@@ -45,7 +45,7 @@ export default function Signup() {
                 } else {
                     console.log(error.message)
                 }
-            }) 
+            })
         } else {
             setHelperText("Passwords don't match!")
         }
@@ -67,7 +67,6 @@ export default function Signup() {
                     autoComplete="off"
                     onSubmit={handleSubmit}
                 >
-                    {success && <Typography>User created!</Typography>}
                     <FormControl>
                         <TextField
                             value={formValue.username}
@@ -79,7 +78,7 @@ export default function Signup() {
                             autoComplete="none"
                             type="text"
                             margin="dense"
-                        />
+                            />
                         <TextField
                             value={formValue.email}
                             onChange={e => handleFormChange(e)}
@@ -90,7 +89,7 @@ export default function Signup() {
                             autoComplete="none"
                             type="text"
                             margin="dense"
-                        />
+                            />
                         <TextField
                             value={formValue.password}
                             onChange={e => handleFormChange(e)}
@@ -101,7 +100,7 @@ export default function Signup() {
                             autoComplete="none"
                             type="password"
                             margin="dense"
-                        />
+                            />
                         <FormHelperText>Password must be min. 5 characters</FormHelperText>
                         <TextField
                             value={formValue.confirmPwd}
@@ -113,7 +112,7 @@ export default function Signup() {
                             autoComplete="none"
                             type="password"
                             margin="dense"
-                        />
+                            />
                         <FormHelperText error>
                             {helperText}
                         </FormHelperText>
@@ -122,9 +121,10 @@ export default function Signup() {
                             size="large"
                             variant="contained"
                             margin="normal"
-                        >
+                            >
                             Create user
                         </Button>
+                        {success && <Typography>User created!</Typography>}
                     </FormControl>
                 </Box>
             </Box>

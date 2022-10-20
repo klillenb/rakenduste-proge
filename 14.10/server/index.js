@@ -24,7 +24,7 @@ mongoose
   .catch((e) => console.error(e))
 
 app.use("/", userRouter)
-app.use("/", todoRouter)
+app.use("/todo", todoRouter)
 
 app.get("/", (req, res) => {
     res.send("Hello World!")

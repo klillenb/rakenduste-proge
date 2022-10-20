@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react"
 import { Box, Button, Divider, FormControl, TextField } from "@mui/material"
 import axios from "axios"
-import { UserContext } from "../App"
 
 export default function Login() {
     const form = {
@@ -11,7 +10,6 @@ export default function Login() {
     }
 
     const [formValue, setFormValue] = useState(form)
-    const { currentUser, setCurrentUser } = useContext(UserContext)
 
     const handleFormChange = e => {
         const { value, name } = e.target
@@ -28,8 +26,6 @@ export default function Login() {
         axios.post("http://localhost:8080/login", formValue)
         .then(function(response) {
             console.log(response)
-            // setCurrentUser(response.data)
-            console.log(currentUser)
         })
         .catch(function(error) {
             if(error.response){

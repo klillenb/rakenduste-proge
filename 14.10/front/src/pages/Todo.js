@@ -1,17 +1,20 @@
 import React, { useState, useRef, useEffect } from "react"
-import { Box, Button, Divider, FormControl, TextField } from "@mui/material"
+import { Box, Button, Divider, FormControl, TextField, Typography } from "@mui/material"
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import et from 'dayjs/locale/et';
+import axios from "axios";
+import TodoList from "../components/TodoList";
 
 export default function Todo() {
     const form = {
         title: "",
-        date: `${dayjs().get('year')}-${(dayjs().get('month') + 1) < 10 ? "0".concat(dayjs().get('month') + 1) : (dayjs().get('month') + 1)}-${dayjs().get('date') < 10 ? "0".concat(dayjs().get('date')): dayjs().get('date')}`,
-        importance: ""
+        date: dayjs().format("YYYY-MM-DD"),
+        importance: 0
     }
     const [formValue, setFormValue] = useState(form)
+    const [success, setSuccess] = useState(false)
     // const titleRef = useRef(null)
     // const dateRef = useRef(null)
     // const importanceRef = useRef(null)
@@ -23,9 +26,6 @@ export default function Todo() {
 
     const handleFormChange = e => {
         const { value, name } = e.target
-        // if(name === "date"){
-        //     value = `${e.$y}-${e.$M + 1 < 10 ? "0".concat(e.$M + 1) : e.$M + 1}-${e.$D < 10 ? "0".concat(e.$D) : e.$D}`
-        // }
         const newValue = {
             ...formValue,
             [name]: value
@@ -36,7 +36,25 @@ export default function Todo() {
     const handleSubmit = e => {
         e.preventDefault()
         console.log(previousInputValue.current)
-        return alert(`Hi, there is no connection to backend lol`)
+        // return alert(`Hi, there is no connection to backend lol`)
+        axios.post("http://localhost:8080/todo/new", {
+            title: formValue.title,
+            date: formValue.date,
+            importance: parseInt(formValue.importance)
+        })
+            .then(function(response) {
+                console.log(response)
+                setSuccess(true)
+            })
+            .catch(function(error) {
+                if(error.response){
+                    console.log(error.response)
+                } else if (error.request){
+                    console.log(error.request)
+                } else {
+                    console.log(error.message)
+                }
+            })
     }
 
     return (
@@ -46,7 +64,6 @@ export default function Todo() {
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
-                minHeight="100vh"
             >
                 <Divider>Add To-Do</Divider>
                 <Box
@@ -68,19 +85,20 @@ export default function Todo() {
                             type="text"
                             margin="dense"
                         />
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={et}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={et}>
                             <DatePicker
                                 id="date"
                                 name="date"
                                 label="Date"
                                 invalidDateMessage="Date error"
                                 inputFormat="DD.MM.YYYY"
+                                mask="__.__.____"
                                 value={formValue.date}
-                                inputRef={dateRef}
-                                onChange={e => handleFormChange(e)}
+                                inputRef={previousInputValue.date}
+                                onChange={value => setFormValue({...formValue, date: dayjs(value).format("YYYY-MM-DD")})}
                                 renderInput={(params) => <TextField {...params} />}
-                            />
-						</LocalizationProvider> */}
+                                />
+						</LocalizationProvider>
                         <TextField
                             value={formValue.importance}
                             inputRef={previousInputValue.importance}
@@ -89,18 +107,21 @@ export default function Todo() {
                             name="importance"
                             label="Importance"
                             autoComplete="none"
-                            type="text"
+                            type="number"
                             margin="dense"
-                        />
+                            />
                         <Button
                             type="submit"
                             size="large"
                             variant="contained"
                             margin="normal"
-                        >
+                            >
                             Submit
                         </Button>
+                        {success && <Typography>To-do created!</Typography>}
                     </FormControl>
+                    <Divider>TO-DO's</Divider>
+                    <TodoList />
                 </Box>
             </Box>
         </>
